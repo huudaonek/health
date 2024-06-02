@@ -1,0 +1,71 @@
+﻿@model insure_fixlast.Models.RegisterEmployeeViewModel
+
+@{
+    ViewData["Title"] = "Register Employee";
+}
+
+<h2>Register Employee</h2>
+
+<form asp-action="RegisterEmployee">
+    <div>
+        <h4>Account Information</h4>
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" />
+        </div>
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" />
+        </div>
+    </div>
+
+    <div>
+        <h4>Company Information</h4>
+        <div>
+            <label asp-for="CompanyName"></label>
+            <input asp-for="CompanyName" />
+        </div>
+        <div>
+            <label asp-for="CompanyAddress"></label>
+            <input asp-for="CompanyAddress" />
+        </div>
+        <div>
+            <label asp-for="CompanyPhone"></label>
+            <input asp-for="CompanyPhone" />
+        </div>
+        <div>
+            <label asp-for="CompanyEmail"></label>
+            <input asp-for="CompanyEmail" />
+        </div>
+    </div>
+
+    <div>
+        <h4>Employee Information</h4>
+        <div>
+            <label asp-for="EmployeeName"></label>
+            <input asp-for="EmployeeName" />
+        </div>
+        <div>
+            <label asp-for="EmployeeRank"></label>
+            <select asp-for="EmployeeRank">
+                <option value="None">None</option>
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+            </select>
+        </div>
+        <div>
+            <label asp-for="EmployeeAddress"></label>
+            <input asp-for="EmployeeAddress" />
+        </div>
+        <div>
+            <label asp-for="EmployeePhone"></label>
+            <input asp-for="EmployeePhone" />
+        </div>
+    </div>
+
+    <button type="submit">Register</button>
+</form>

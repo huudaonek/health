@@ -1,0 +1,104 @@
+﻿@model insure_fixlast.Models.CheckoutViewModel
+
+    <style>
+        .checkout-container {
+            margin-top: 30px;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .total-price {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .payment-method-label {
+            font-size: 1.1em;
+        }
+    </style>
+<div class="container checkout-container">
+    <h1 class="text-center mb-4">Checkout</h1>
+
+    @if (!string.IsNullOrEmpty(Model.UserName) && !string.IsNullOrEmpty(Model.CompanyName))
+    {
+        <div class="alert alert-info text-center">
+            <h7>User: @Model.UserName</h7>
+            <h7>Company: @Model.CompanyName</h7>
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(Model.UserName))
+    {
+        <div class="alert alert-info text-center">
+            <h7>User: @Model.UserName</h7>
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(Model.CompanyName))
+    {
+        <div class="alert alert-info text-center">
+            <h7>Company: @Model.CompanyName</h7>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            <p>No user or company information available.</p>
+        </div>
+    }
+
+
+    @if (Model.SelectedServices != null && Model.SelectedServices.Count > 0)
+    {
+        <h2 class="mb-4">Selected Services:</h2>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Service</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    decimal totalPrice = 0;
+                }
+                @foreach (var service in Model.SelectedServices)
+                {
+                    var quantity = Model.ServiceQuantities != null && Model.ServiceQuantities.ContainsKey(service.Id) ? Model.ServiceQuantities[service.Id] : 1;
+                    var total = service.Price * quantity;
+                    totalPrice += total;
+                    <tr>
+                        <td>@service.Name</td>
+                        <td>$@service.Price</td>
+                        <td>@quantity</td>
+                        <td>$@total</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p class="total-price text-right">Total Price: $@totalPrice</p>
+
+        <form asp-action="PlaceOrder" method="post">
+            <div class="form-group">
+                <label for="paymentMethod" class="payment-method-label">Select Payment Method:</label>
+                <select id="paymentMethod" name="paymentMethod" class="form-control">
+                    <option value="Momo">Momo</option>
+                    <option value="PayPal">PayPal</option>
+                </select>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">Place Order</button>
+            </div>
+        </form>
+
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            <p>No services selected.</p>
+        </div>
+    }
+</div>

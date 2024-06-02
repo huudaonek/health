@@ -1,0 +1,110 @@
+﻿@model List<insure_fixlast.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "Purchased Packages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin: 20px 0;
+        font-size: 2.5rem;
+    }
+
+    .table {
+        width: 80%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table thead {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+    .btn-primary {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 10px;
+        text-align: center;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+</style>
+<h1>Purchased Packages</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Service Name</th>
+                <th>Quantity</th>
+                <th>Assigned Employee</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 1;
+                foreach (var orderDetail in Model)
+                {
+                    if (orderDetail.Quantity != 0)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td>@orderDetail.Service.Name</td>
+                            <td>@orderDetail.Quantity</td>
+                            <td>
+                                @if (orderDetail.Employee != null)
+                                {
+                                    @orderDetail.Employee.Name
+                                }
+                                else
+                                {
+                                    <span>Not Assigned</span>
+                                }
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No orders found.</p>
+}

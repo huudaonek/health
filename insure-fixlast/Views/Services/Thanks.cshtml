@@ -1,0 +1,30 @@
+﻿@model insure_fixlast.Models.Order
+
+<h1>Thank You for Your Purchase!</h1>
+
+<h2>Order Details</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detail in Model.Details)
+        {
+            <tr>
+                <td>@detail.Service.Name</td>
+                <td>@detail.Quantity</td>
+                <td>@detail.Service.Price</td>
+                <td>@(detail.Quantity * detail.Service.Price)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Total Price: $@Model.PriceTotal</h2>
+
+<p>Thank you for choosing our services!</p>
